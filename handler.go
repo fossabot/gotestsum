@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"os"
+	"os/exec"
 
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
@@ -87,4 +89,25 @@ func writeJUnitFile(opts *options, execution *testjson.Execution) error {
 		FormatTestSuiteName:     opts.junitTestSuiteNameFormat.Value(),
 		FormatTestCaseClassname: opts.junitTestCaseClassnameFormat.Value(),
 	})
+}
+
+func postRunHook(opts *options, execution *testjson.Execution) error {
+	if len(opts.postRunHookCmd) == 0 {
+		return nil
+	}
+
+	cmd := exec.Command(opts.postRunHookCmd[0], opts.postRunHookCmd[1:]...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Env = append(
+		os.Environ(),
+		"GOTESTSUM_JSONFILE="+opts.jsonFile,
+		"GOTESTSUM_JUNITFILE"+opts.junitFile,
+		fmt.Sprintf("TESTS_TOTAL=%d", execution.Total()),
+		fmt.Sprintf("TESTS_FAILED=%d", len(execution.Failed())),
+		fmt.Sprintf("TESTS_SKIPPED=%d", len(execution.Skipped())),
+		fmt.Sprintf("TESTS_ERRORS=%d", len(execution.Errors())),
+	)
+	// TODO: send a more detailed report to stdin?
+	return cmd.Run()
 }
