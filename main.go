@@ -92,8 +92,8 @@ Formats:
 		"format the testsuite name field as: "+junitFieldFormatValues)
 	flags.Var(opts.junitTestCaseClassnameFormat, "junitfile-testcase-classname",
 		"format the testcase classname field as: "+junitFieldFormatValues)
-	flags.StringSliceVar(&opts.postRunHookCmd, "post-run-command",
-		nil, "run this command once the tests have completed")
+	flags.StringVar(&opts.postRunHookCmd, "post-run-command",
+		"", "run this command once the tests have completed")
 	flags.BoolVar(&opts.version, "version", false, "show version and exit")
 	return flags, opts
 }
@@ -112,7 +112,7 @@ type options struct {
 	rawCommand                   bool
 	jsonFile                     string
 	junitFile                    string
-	postRunHookCmd               []string
+	postRunHookCmd               string
 	noColor                      bool
 	noSummary                    *noSummaryValue
 	junitTestSuiteNameFormat     *junitFieldFormatValue

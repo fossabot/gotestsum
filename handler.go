@@ -92,11 +92,12 @@ func writeJUnitFile(opts *options, execution *testjson.Execution) error {
 }
 
 func postRunHook(opts *options, execution *testjson.Execution) error {
-	if len(opts.postRunHookCmd) == 0 {
+	if opts.postRunHookCmd == "" {
 		return nil
 	}
 
-	cmd := exec.Command(opts.postRunHookCmd[0], opts.postRunHookCmd[1:]...)
+	// TODO: windows?
+	cmd := exec.Command("/bin/sh", "-c", opts.postRunHookCmd)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	cmd.Env = append(
