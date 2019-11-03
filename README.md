@@ -10,6 +10,7 @@ source with `go get gotest.tools/gotestsum` (you may need to run `dep ensure`).
 ## Demo
 
 ![Demo](https://raw.githubusercontent.com/gotestyourself/gotestsum/master/docs/demo.gif)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fglenjamin%2Fgotestsum.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fglenjamin%2Fgotestsum?ref=badge_shield)
 
 ## Docs
 
@@ -152,3 +153,7 @@ filewatcher gotestsum
 ## Thanks
 
 This package is heavily influenced by the [pytest](https://docs.pytest.org) test runner for `python`.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fglenjamin%2Fgotestsum.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fglenjamin%2Fgotestsum?ref=badge_large)
